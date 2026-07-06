@@ -1,0 +1,3 @@
+Q. Why do backend services expose /health endpoints?
+
+A. Health endpoints allow infrastructure components like load balancers, Kubernetes, and monitoring systems to determine whether a service is healthy enough to receive traffic. A production health check often verifies dependencies such as the database, cache, or message broker, rather than only confirming that the application process is running.
