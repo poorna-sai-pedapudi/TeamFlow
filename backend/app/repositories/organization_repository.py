@@ -19,3 +19,13 @@ class OrganizationRepository:
         db.refresh(db_organization)
 
         return db_organization
+    
+    def get_all(self, db: Session) -> list[Organization]:
+        return db.query(Organization).all()
+    
+    def get_by_id(self, db: Session, organization_id: int) -> Organization | None:
+        return (
+            db.query(Organization)
+            .filter(Organization.id == organization_id)
+            .first()
+        )
