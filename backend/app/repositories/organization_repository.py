@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 from app.models.organization import Organization
-from app.schemas.organization import OrganizationCreate
+from app.schemas.organization import (
+    OrganizationCreate,
+    OrganizationUpdate,
+)
 
 class OrganizationRepository:
 
@@ -29,3 +32,17 @@ class OrganizationRepository:
             .filter(Organization.id == organization_id)
             .first()
         )
+    
+    def update(
+    self,
+    db: Session,
+    organization: Organization,
+    organization_update: OrganizationUpdate,
+) -> Organization:
+
+        organization.name = organization_update.name
+
+        db.commit()
+        db.refresh(organization)
+
+        return organization

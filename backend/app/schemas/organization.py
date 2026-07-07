@@ -11,3 +11,7 @@ class OrganizationResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class OrganizationUpdate(BaseModel):
+    name: str = Field(..., min_length = 2, max_length = 255)
