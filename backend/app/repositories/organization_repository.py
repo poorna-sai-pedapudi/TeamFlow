@@ -46,3 +46,12 @@ class OrganizationRepository:
         db.refresh(organization)
 
         return organization
+
+
+    def delete(
+            self,
+            db: Session,
+            organization: Organization,
+    ) -> None:
+        db.delete(organization)
+        db.commit()

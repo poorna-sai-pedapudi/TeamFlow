@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException
-
+from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 
 
@@ -88,3 +87,33 @@ def update_organization(
         organization=organization,
         organization_update=organization_update,
     )
+
+
+
+@router.delete(
+    "/{organization_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def delete_organization(
+    organization_id: int,
+    db: Session = Depends(get_db),
+):
+    repository = OrganizationRepository()
+
+    organization = repository.get_by_id(
+        db=db,
+        organization_id=organization_id,
+    )
+
+    if organization is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Organization not found",
+        )
+    
+    repository.delete(
+        db=db,
+        organization=organization,
+    )
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
